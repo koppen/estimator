@@ -7,14 +7,8 @@ class Estimate
 
   include TaskList
 
-  class << self
-    def build(hours_per_day: 6)
-      estimate = Estimate.new
-      estimate.hours_per_day = hours_per_day
-      builder = EstimateBuilder.new(estimate)
-      yield builder
-      estimate
-    end
+  def build
+    yield EstimateBuilder.new(self)
   end
 
   def days
