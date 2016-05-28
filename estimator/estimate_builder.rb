@@ -1,4 +1,4 @@
-require_relative "task"
+require_relative "task_builder"
 
 class EstimateBuilder
   attr_reader :estimate
@@ -8,10 +8,8 @@ class EstimateBuilder
   end
 
   def task(name, min_hours = nil, max_hours = nil)
-    task = Task.new(name, min_hours, max_hours)
-    if block_given?
-      yield task
-    end
+    task = TaskBuilder.build(name, min_hours, max_hours)
+    yield TaskBuilder.new(task) if block_given?
     estimate.add_task(task)
     task
   end
