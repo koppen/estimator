@@ -15,7 +15,7 @@ class Task
 
   def max_hours
     if tasks.any?
-      tasks.map(&:max_hours).inject(&:+)
+      tasks.map(&:max_hours).compact.inject(&:+)
     else
       @max_hours
     end
@@ -23,7 +23,7 @@ class Task
 
   def min_hours
     if tasks.any?
-      tasks.map(&:min_hours).inject(&:+)
+      tasks.map(&:min_hours).compact.inject(&:+)
     else
       @min_hours
     end

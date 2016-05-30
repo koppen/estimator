@@ -36,11 +36,11 @@ class Estimate
   private
 
   def max_hours
-    tasks.map(&:max_hours).inject(&:+)
+    tasks.map(&:max_hours).compact.inject(&:+)
   end
 
   def min_hours
-    tasks.map(&:min_hours).inject(&:+)
+    tasks.map(&:min_hours).compact.inject(&:+)
   end
 end
 
