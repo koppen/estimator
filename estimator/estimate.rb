@@ -3,7 +3,8 @@ require_relative "task_list"
 
 class Estimate
   attr_accessor \
-    :hours_per_day
+    :hours_per_day,
+    :price_per_day
 
   include TaskList
 
@@ -22,6 +23,13 @@ class Estimate
     Range.new(
       min_hours,
       max_hours
+    )
+  end
+
+  def price
+    Range.new(
+      days.first * price_per_day,
+      days.last * price_per_day
     )
   end
 
