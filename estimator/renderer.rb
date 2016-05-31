@@ -10,12 +10,19 @@ class Renderer
       output_task(task)
     end
 
-    puts "Total hours: #{estimate.hours.inspect}"
-    puts "Total days: #{estimate.days.inspect}"
-    puts "Total price: #{estimate.price.inspect}"
+    puts format_row("Total hours", estimate.hours.first, estimate.hours.last)
+    puts format_row("Total days", estimate.days.first, estimate.days.last)
+    puts format("%-40s %6i %6i", "Total price", estimate.price.first, estimate.price.last)
   end
 
   private
+
+  def format_row(*args)
+    format(
+      "%-40s %6.0f %6.0f",
+      *args
+    )
+  end
 
   def indent(name, level)
     return name if root?(level)
@@ -26,18 +33,17 @@ class Renderer
   def output_task(task, level = 0)
     indented_name = indent(task.name, level)
 
-    puts format(
-      "%-40s %3i %3i",
+    puts format_row(
       indented_name,
-      task.min_hours.round,
-      task.max_hours.round
+      task.min_hours.round(1),
+      task.max_hours.round(1)
     )
 
     if root?(level)
       puts [
         "-" * 40,
-        "-" * 3,
-        "-" * 3
+        "-" * 6,
+        "-" * 6
       ].join("-")
     end
     task.tasks.each do |sub_task|
