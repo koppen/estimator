@@ -1,3 +1,5 @@
+require "colorize"
+
 class Renderer
   attr_reader :estimate
 
@@ -33,19 +35,14 @@ class Renderer
   def output_task(task, level = 0)
     indented_name = indent(task.name, level)
 
-    puts format_row(
+    row = format_row(
       indented_name,
       task.min_hours.round(1),
       task.max_hours.round(1)
     )
+    row = row.white if root?(level)
+    puts row
 
-    if root?(level)
-      puts [
-        "-" * 40,
-        "-" * 6,
-        "-" * 6
-      ].join("-")
-    end
     task.tasks.each do |sub_task|
       output_task(sub_task, level + 1)
     end
