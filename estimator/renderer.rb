@@ -28,6 +28,10 @@ class Renderer
     puts
 
     puts format("%-70s %6i %6i", "Total price", estimate.price.first, estimate.price.last)
+
+    estimate.calculations.each do |calculation|
+      p calculation
+    end
   end
 
   private

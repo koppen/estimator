@@ -13,10 +13,10 @@ class Estimate
     yield EstimateBuilder.new(self)
   end
 
-  def days
+  def days(with_derived: false)
     Range.new(
-      min_hours.to_f / hours_per_day,
-      max_hours.to_f / hours_per_day
+      min_hours(:with_derived => with_derived).to_f / hours_per_day,
+      max_hours(:with_derived => with_derived).to_f / hours_per_day
     )
   end
 
@@ -29,36 +29,46 @@ class Estimate
     (days.to_f / days_per_iteration).ceil
   end
 
-  def hours
+  def hours(with_derived: false)
     Range.new(
-      min_hours,
-      max_hours
+      min_hours(:with_derived => with_derived),
+      max_hours(:with_derived => with_derived)
     )
   end
 
-  def iterations
+  def iterations(with_derived: false)
     return nil unless days_per_iteration
     Range.new(
-      hours_to_iterations(hours.first),
-      hours_to_iterations(hours.last)
+      hours_to_iterations(hours(:with_derived => with_derived).first),
+      hours_to_iterations(hours(:with_derived => with_derived).last)
     )
   end
 
-  def price
+  def price(with_derived: false)
     Range.new(
-      days.first * price_per_day,
-      days.last * price_per_day
+      days(:with_derived => with_derived).first * price_per_day,
+      days(:with_derived => with_derived).last * price_per_day
     )
   end
 
   private
 
-  def max_hours
-    tasks.map(&:max_hours).compact.inject(&:+)
+  def filter_tasks(with_derived: false)
+    if with_derived
+      tasks + derived_values
+    else
+      tasks
+    end
   end
 
-  def min_hours
-    tasks.map(&:min_hours).compact.inject(&:+)
+  def max_hours(with_derived: false)
+    items = filter_tasks(:with_derived => with_derived)
+    items.map(&:max_hours).compact.inject(&:+)
+  end
+
+  def min_hours(with_derived: false)
+    items = filter_tasks(:with_derived => with_derived)
+    items.map(&:min_hours).compact.inject(&:+)
   end
 end
 

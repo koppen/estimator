@@ -1,7 +1,14 @@
+require_relative "derived_value"
 require_relative "task_builder"
 
 class EstimateBuilder
   attr_reader :estimate
+
+  # Adds a derived value to the estimate
+  def derived(name, calculation)
+    derived_value = DerivedValue.new(name, calculation)
+    estimate.add_derived_value(derived_value)
+  end
 
   def initialize(estimate)
     @estimate = estimate
