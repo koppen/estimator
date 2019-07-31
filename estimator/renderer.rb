@@ -27,7 +27,7 @@ class Renderer
       )
     puts
 
-    puts format("%-40s %6i %6i", "Total price", estimate.price.first, estimate.price.last)
+    puts format("%-70s %6i %6i", "Total price", estimate.price.first, estimate.price.last)
   end
 
   private
