@@ -11,27 +11,9 @@ class Renderer
     puts format("%-40s %13s  %13s  %13s", "Estimate", "Hours", "Days", "Iterations")
     puts
 
-    estimate.tasks.each do |task|
-      output_task(task)
-    end
-
-    puts format("%-40s %13s  %13s  %13s", "", "Hours", "Days", "Iterations")
-    puts format_aggregate_row(
-      "Total",
-      estimate.hours.first,
-      estimate.hours.last,
-      estimate.days.first,
-      estimate.days.last,
-      estimate.iterations.first,
-      estimate.iterations.last
-      )
-    puts
-
-    puts format("%-70s %6i %6i", "Total price", estimate.price.first, estimate.price.last)
-
-    estimate.calculations.each do |calculation|
-      p calculation
-    end
+    output_tasks
+    output_totals
+    output_price
   end
 
   private
@@ -54,6 +36,15 @@ class Renderer
     return name if root?(level)
     indent = "  " * (level - 1) + "* "
     indent + name
+  end
+
+  def output_price
+    puts format(
+      "%-70s %6i %6i",
+      "Total price",
+      estimate.price.first,
+      estimate.price.last
+    )
   end
 
   def output_task(task, level = 0)
@@ -86,6 +77,27 @@ class Renderer
     end
 
     puts if root?(level)
+  end
+
+
+  def output_tasks
+    estimate.tasks.each do |task|
+      output_task(task)
+    end
+  end
+
+  def output_totals
+    puts format("%-40s %13s  %13s  %13s", "", "Hours", "Days", "Iterations")
+    puts format_aggregate_row(
+      "Total",
+      estimate.hours.first,
+      estimate.hours.last,
+      estimate.days.first,
+      estimate.days.last,
+      estimate.iterations.first,
+      estimate.iterations.last
+      )
+    puts
   end
 
   def root?(level)
