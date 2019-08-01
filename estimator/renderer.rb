@@ -13,7 +13,13 @@ class Renderer
 
     output_tasks
     output_totals
-    output_price
+
+    if estimate.derived_values.any?
+      output_derived_values
+      output_totals(:with_derived => true)
+    end
+
+    output_price(:with_derived => true)
   end
 
   private
@@ -38,12 +44,22 @@ class Renderer
     indent + name
   end
 
-  def output_price
+  def output_derived_values
+    # Build a grouped task with all the derived values
+    group = Task.new("Management")
+    estimate.derived_values.each do |derived_value|
+      group.add_task(derived_value)
+    end
+
+    output_task(group)
+  end
+
+  def output_price(with_derived: false)
     puts format(
       "%-70s %6i %6i",
       "Total price",
-      estimate.price.first,
-      estimate.price.last
+      estimate.price(:with_derived => with_derived).first,
+      estimate.price(:with_derived => with_derived).last
     )
   end
 
@@ -86,16 +102,16 @@ class Renderer
     end
   end
 
-  def output_totals
+  def output_totals(with_derived: false)
     puts format("%-40s %13s  %13s  %13s", "", "Hours", "Days", "Iterations")
     puts format_aggregate_row(
       "Total",
-      estimate.hours.first,
-      estimate.hours.last,
-      estimate.days.first,
-      estimate.days.last,
-      estimate.iterations.first,
-      estimate.iterations.last
+      estimate.hours(:with_derived => with_derived).first,
+      estimate.hours(:with_derived => with_derived).last,
+      estimate.days(:with_derived => with_derived).first,
+      estimate.days(:with_derived => with_derived).last,
+      estimate.iterations(:with_derived => with_derived).first,
+      estimate.iterations(:with_derived => with_derived).last
       )
     puts
   end
