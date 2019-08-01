@@ -55,14 +55,24 @@ class Renderer
   end
 
   def output_price(with_derived: false)
-    puts format(
-      "%-55s %6.0f %6.0f  %6.0f %6.0f",
-      "Total price",
-      estimate.price_based_on_days(:with_derived => with_derived).first,
-      estimate.price_based_on_days(:with_derived => with_derived).last,
-      estimate.price_based_on_iterations(:with_derived => with_derived).first,
-      estimate.price_based_on_iterations(:with_derived => with_derived).last
+    if estimate.price_per_iteration
+      puts format(
+        "%-55s %6.0f %6.0f  %6.0f %6.0f",
+        "Total price",
+        estimate.price_based_on_days(:with_derived => with_derived).first,
+        estimate.price_based_on_days(:with_derived => with_derived).last,
+        estimate.price_based_on_iterations(:with_derived => with_derived).first,
+        estimate.price_based_on_iterations(:with_derived => with_derived).last
       )
+    else
+      puts format(
+        "%-55s %6.0f %6.0f",
+        "Total price",
+        estimate.price_based_on_days(:with_derived => with_derived).first,
+        estimate.price_based_on_days(:with_derived => with_derived).last
+      )
+    end
+
     puts
   end
 
