@@ -56,11 +56,14 @@ class Renderer
 
   def output_price(with_derived: false)
     puts format(
-      "%-70s %6i %6i",
+      "%-55s %6.0f %6.0f  %6.0f %6.0f",
       "Total price",
-      estimate.price(:with_derived => with_derived).first,
-      estimate.price(:with_derived => with_derived).last
-    )
+      estimate.price_based_on_days(:with_derived => with_derived).first,
+      estimate.price_based_on_days(:with_derived => with_derived).last,
+      estimate.price_based_on_iterations(:with_derived => with_derived).first,
+      estimate.price_based_on_iterations(:with_derived => with_derived).last
+      )
+    puts
   end
 
   def output_task(task, level = 0)
@@ -94,7 +97,6 @@ class Renderer
 
     puts if root?(level)
   end
-
 
   def output_tasks
     estimate.tasks.each do |task|

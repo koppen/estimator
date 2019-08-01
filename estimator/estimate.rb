@@ -5,7 +5,8 @@ class Estimate
   attr_accessor \
     :days_per_iteration,
     :hours_per_day,
-    :price_per_day
+    :price_per_day,
+    :price_per_iteration
 
   include TaskList
 
@@ -45,9 +46,20 @@ class Estimate
   end
 
   def price(with_derived: false)
+    price_based_on_iterations(:with_derived => with_derived)
+  end
+
+  def price_based_on_days(with_derived: false)
     Range.new(
       days(:with_derived => with_derived).first * price_per_day,
       days(:with_derived => with_derived).last * price_per_day
+    )
+  end
+
+  def price_based_on_iterations(with_derived: false)
+    Range.new(
+      iterations(:with_derived => with_derived).first * price_per_iteration,
+      iterations(:with_derived => with_derived).last * price_per_iteration
     )
   end
 
