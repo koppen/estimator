@@ -2,17 +2,6 @@ require: 'rubocop-performance'
 
 AllCops:
   DisplayCopNames: true
-  Exclude:
-    - 'bin/*'
-    - 'config/initializers/backtrace_silencers.rb'
-    - 'config/initializers/content_security_policy.rb'
-    - 'config/initializers/simple_form_bootstrap.rb'
-    - 'config/initializers/wrap_parameters.rb'
-    - 'config/puma.rb'
-    - 'db/schema.rb'
-    - 'lib/templates/**/*.rb'
-    - 'node_modules/**/*'
-    - 'vendor/**/*'
   TargetRubyVersion: 2.6
 
 Layout/DotPosition:
