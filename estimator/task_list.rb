@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TaskList
   def add_derived_value(derived_value)
     raise ArgumentError if derived_value.nil?

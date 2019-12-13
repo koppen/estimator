@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "colorize"
 
 class Renderer
@@ -40,6 +42,7 @@ class Renderer
 
   def indent(name, level)
     return name if root?(level)
+
     indent = "  " * (level - 1) + "* "
     indent + name
   end
@@ -124,7 +127,7 @@ class Renderer
       estimate.days(:with_derived => with_derived).last,
       estimate.iterations(:with_derived => with_derived).first,
       estimate.iterations(:with_derived => with_derived).last
-      )
+    )
     puts
   end
 

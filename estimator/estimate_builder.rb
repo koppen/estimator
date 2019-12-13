@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "derived_value"
 require_relative "task_builder"
 

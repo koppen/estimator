@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: true
 class Derive
   class PercentOfTotal
@@ -48,9 +50,10 @@ class Derive
     end
 
     def percent_of_total(percentage)
-      raise ArgumentError,
-        "Expected percentage to be a number from 0 to 100. Got #{percentage}!" \
-        unless (0..100).include?(percentage)
+      unless (0..100).cover?(percentage)
+        raise ArgumentError,
+              "Expected percentage to be a number from 0 to 100. Got #{percentage}!"
+      end
       PercentOfTotal.new(percentage)
     end
   end

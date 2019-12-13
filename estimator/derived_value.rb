@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Derived Values are items in an estimate that aren't based on an actual
 # estimate. Rather, they are calculated based on the other tasks in the
 # estimate.

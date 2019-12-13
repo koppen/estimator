@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "estimate_builder"
 require_relative "task_list"
 
@@ -39,6 +41,7 @@ class Estimate
 
   def iterations(with_derived: false)
     return nil unless days_per_iteration
+
     Range.new(
       hours_to_iterations(hours(:with_derived => with_derived).first),
       hours_to_iterations(hours(:with_derived => with_derived).last)
@@ -83,4 +86,3 @@ class Estimate
     items.map(&:min_hours).compact.inject(&:+)
   end
 end
-
