@@ -51,8 +51,9 @@ class Derive
 
     def percent_of_total(percentage)
       unless (0..100).cover?(percentage)
-        raise ArgumentError,
-              "Expected percentage to be a number from 0 to 100. Got #{percentage}!"
+        raise \
+          ArgumentError,
+          "Expected percentage to be a number from 0 to 100. Got #{percentage}!"
       end
       PercentOfTotal.new(percentage)
     end

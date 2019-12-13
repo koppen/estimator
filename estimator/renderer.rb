@@ -10,7 +10,9 @@ class Renderer
   end
 
   def output
-    puts format("%-40s %13s  %13s  %13s", "Estimate", "Hours", "Days", "Iterations")
+    puts format(
+      "%-40s %13s  %13s  %13s", "Estimate", "Hours", "Days", "Iterations"
+    )
     puts
 
     output_tasks
