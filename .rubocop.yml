@@ -2,6 +2,8 @@ require: 'rubocop-performance'
 
 AllCops:
   DisplayCopNames: true
+  Exclude:
+    - 'estimates/*'
   TargetRubyVersion: 2.6
 
 Layout/DotPosition:
