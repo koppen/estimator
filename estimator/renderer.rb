@@ -11,7 +11,7 @@ class Renderer
 
   def output
     puts format(
-      "%-40s %13s  %13s  %13s", "Estimate", "Hours", "Days", "Iterations"
+      "%-50s %13s  %13s  %13s", "Estimate", "Hours", "Days", "Iterations"
     )
     puts
 
@@ -30,14 +30,14 @@ class Renderer
 
   def format_row(*args)
     format(
-      "%-40s %6.0f %6.0f",
+      "%-50s %6.0f %6.0f",
       *args
     )
   end
 
   def format_aggregate_row(*args)
     format(
-      "%-40s %6.0f %6.0f  %6.0f %6.0f  %6.0f %6.0f",
+      "%-50s %6.0f %6.0f  %6.0f %6.0f  %6.0f %6.0f",
       *args
     )
   end
@@ -62,7 +62,7 @@ class Renderer
   def output_price(with_derived: false)
     if estimate.price_per_iteration
       puts format(
-        "%-55s %6.0f %6.0f  %6.0f %6.0f",
+        "%-65s %6.0f %6.0f  %6.0f %6.0f",
         "Total price",
         estimate.price_based_on_days(:with_derived => with_derived).first,
         estimate.price_based_on_days(:with_derived => with_derived).last,
@@ -71,7 +71,7 @@ class Renderer
       )
     else
       puts format(
-        "%-55s %6.0f %6.0f",
+        "%-65s %6.0f %6.0f",
         "Total price",
         estimate.price_based_on_days(:with_derived => with_derived).first,
         estimate.price_based_on_days(:with_derived => with_derived).last
@@ -120,7 +120,7 @@ class Renderer
   end
 
   def output_totals(with_derived: false)
-    puts format("%-40s %13s  %13s  %13s", "", "Hours", "Days", "Iterations")
+    puts format("%-50s %13s  %13s  %13s", "", "Hours", "Days", "Iterations")
     puts format_aggregate_row(
       "Total",
       estimate.hours(:with_derived => with_derived).first,
