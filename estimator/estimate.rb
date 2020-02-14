@@ -12,8 +12,9 @@ class Estimate
 
   include TaskList
 
-  def build
-    yield EstimateBuilder.new(self)
+  def build(&block)
+    builder = EstimateBuilder.new(self)
+    builder.instance_eval(&block)
   end
 
   def days(with_derived: false)
