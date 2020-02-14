@@ -18,6 +18,12 @@ Layout/FirstArrayElementIndentation:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
+Layout/LineLength:
+  Exclude:
+    - 'app/dashboards/*'
+    - 'config/initializers/*'
+    - 'db/migrate/*'
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
@@ -49,12 +55,6 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Exclude:
     - 'app/dashboards/*'
-
-Metrics/LineLength:
-  Exclude:
-    - 'app/dashboards/*'
-    - 'config/initializers/*'
-    - 'db/migrate/*'
 
 Metrics/MethodLength:
   Exclude:
