@@ -125,15 +125,9 @@ class Renderer
   def output_totals(with_derived: false)
     puts format("%-50s %13s  %13s  %13s", "", "Hours", "Days", "Iterations")
     puts format_aggregate_row(
-      :name => "Total",
-      :hours_low => estimate.hours(:with_derived => with_derived).first,
-      :hours_high => estimate.hours(:with_derived => with_derived).last,
-      :days_low => estimate.days(:with_derived => with_derived).first,
-      :days_high => estimate.days(:with_derived => with_derived).last,
-      :iterations_low =>
-        estimate.iterations(:with_derived => with_derived).first,
-      :iterations_high =>
-        estimate.iterations(:with_derived => with_derived).last
+      estimate.
+        to_hash(:with_derived => with_derived).
+        merge(:name => "Total")
     )
     puts
   end

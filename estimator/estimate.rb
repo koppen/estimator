@@ -66,6 +66,17 @@ class Estimate
     )
   end
 
+  def to_hash(with_derived: false)
+    {
+      :hours_low => hours(:with_derived => with_derived).first,
+      :hours_high => hours(:with_derived => with_derived).last,
+      :days_low => days(:with_derived => with_derived).first,
+      :days_high => days(:with_derived => with_derived).last,
+      :iterations_low => iterations(:with_derived => with_derived).first,
+      :iterations_high => iterations(:with_derived => with_derived).last,
+    }
+  end
+
   private
 
   def filter_tasks(with_derived: false)
