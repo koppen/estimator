@@ -35,10 +35,13 @@ class Renderer
     )
   end
 
-  def format_aggregate_row(*args)
+  def format_aggregate_row(values)
     format(
-      "%-50s %6.0f %6.0f  %6.0f %6.0f  %6.0f %6.0f",
-      *args
+      "%<name>-50s "\
+      "%<hours_low>6.0f %<hours_high>6.0f  "\
+      "%<days_low>6.0f %<days_high>6.0f  "\
+      "%<iterations_low>6.0f %<iterations_high>6.0f",
+      values
     )
   end
 
@@ -89,13 +92,13 @@ class Renderer
       max_hours = task.max_hours
 
       format_aggregate_row(
-        indented_name,
-        min_hours.round(1),
-        max_hours.round(1),
-        estimate.hours_to_days(min_hours),
-        estimate.hours_to_days(max_hours),
-        estimate.hours_to_iterations(min_hours),
-        estimate.hours_to_iterations(max_hours)
+        :name => indented_name,
+        :hours_low => min_hours.round(1),
+        :hours_high => max_hours.round(1),
+        :days_low => estimate.hours_to_days(min_hours),
+        :days_high => estimate.hours_to_days(max_hours),
+        :iterations_low => estimate.hours_to_iterations(min_hours),
+        :iterations_high => estimate.hours_to_iterations(max_hours)
       ).white + "\n"
     else
       format_row(
@@ -122,13 +125,15 @@ class Renderer
   def output_totals(with_derived: false)
     puts format("%-50s %13s  %13s  %13s", "", "Hours", "Days", "Iterations")
     puts format_aggregate_row(
-      "Total",
-      estimate.hours(:with_derived => with_derived).first,
-      estimate.hours(:with_derived => with_derived).last,
-      estimate.days(:with_derived => with_derived).first,
-      estimate.days(:with_derived => with_derived).last,
-      estimate.iterations(:with_derived => with_derived).first,
-      estimate.iterations(:with_derived => with_derived).last
+      :name => "Total",
+      :hours_low => estimate.hours(:with_derived => with_derived).first,
+      :hours_high => estimate.hours(:with_derived => with_derived).last,
+      :days_low => estimate.days(:with_derived => with_derived).first,
+      :days_high => estimate.days(:with_derived => with_derived).last,
+      :iterations_low =>
+        estimate.iterations(:with_derived => with_derived).first,
+      :iterations_high =>
+        estimate.iterations(:with_derived => with_derived).last
     )
     puts
   end
