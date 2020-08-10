@@ -11,6 +11,12 @@ class TaskBuilder
     end
   end
 
+  # Adds a derived value to the task
+  def derived(name, calculation)
+    derived_value = DerivedValue.new(name, calculation)
+    parent_task.add_derived_value(derived_value)
+  end
+
   def initialize(parent_task)
     @parent_task = parent_task
   end

@@ -9,13 +9,20 @@ class Task
 
   include TaskList
 
+  def hours(with_derived: false)
+    Range.new(
+      min_hours(:with_derived => with_derived),
+      max_hours(:with_derived => with_derived)
+    )
+  end
+
   def initialize(name, min_hours = nil, max_hours = nil)
     @name = name
     @min_hours = min_hours
     @max_hours = max_hours
   end
 
-  def max_hours
+  def max_hours(with_derived: false)
     if tasks.any?
       tasks.map(&:max_hours).compact.inject(&:+)
     else
@@ -23,7 +30,8 @@ class Task
     end
   end
 
-  def min_hours
+  def min_hours(with_derived: false)
+    tasks = filter_tasks(:with_derived => with_derived)
     if tasks.any?
       tasks.map(&:min_hours).compact.inject(&:+)
     else

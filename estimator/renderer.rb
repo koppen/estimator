@@ -109,7 +109,9 @@ class Renderer
     end
     puts row
 
-    task.tasks.each do |sub_task|
+    tasks = task.filter_tasks(:with_derived => true)
+
+    tasks.each do |sub_task|
       output_task(sub_task, level + 1)
     end
 

@@ -4,7 +4,7 @@ module TaskList
   def add_derived_value(derived_value)
     raise ArgumentError if derived_value.nil?
 
-    derived_value.estimate = self
+    derived_value.parent = self
     derived_values << derived_value
   end
 
@@ -14,6 +14,14 @@ module TaskList
 
   def derived_values
     @derived_values ||= []
+  end
+
+  def filter_tasks(with_derived: false)
+    if with_derived
+      tasks + derived_values
+    else
+      tasks
+    end
   end
 
   def tasks

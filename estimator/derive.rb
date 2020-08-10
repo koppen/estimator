@@ -7,12 +7,12 @@ class Derive
       @percentage = Float(percentage)
     end
 
-    def max_hours(estimate)
-      (estimate.hours.last * percentage / 100.0).ceil
+    def max_hours(parent)
+      (parent.hours.last * percentage / 100.0).ceil
     end
 
-    def min_hours(estimate)
-      (estimate.hours.first * percentage / 100.0).ceil
+    def min_hours(parent)
+      (parent.hours.first * percentage / 100.0).ceil
     end
 
     private
