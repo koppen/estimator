@@ -3,6 +3,7 @@
 require "spec_helper"
 
 require_relative "../../../estimator/derive"
+require_relative "../../../estimator/estimate"
 
 RSpec.describe Derive::PerTask do
   let(:estimate) {
@@ -38,6 +39,39 @@ RSpec.describe Derive::PerTask do
 
     it "adds the maximum value for each task" do
       expect(subject.max_hours(estimate)).to eq(3.5)
+    end
+
+    it "only counts tasks on the same nesting level" do
+      estimate = Estimate.new
+      estimate.build do |e|
+        e.task("Same level") do |t|
+          t.task("Nested below", 1, 2)
+        end
+      end
+
+      expect(subject.min_hours(estimate)).to eq(1)
+    end
+
+    context "added to a Task" do
+      it "counts the sub tasks in the task only" do
+        estimate = Estimate.new
+        estimate.build do |e|
+          e.task("Same level") do |t|
+            t.task("Nested below", 1, 2)
+            t.task("Nested below", 1, 2)
+          end
+
+          e.task("Nested below", 1, 2)
+          e.task("Nested below", 1, 2)
+        end
+
+        task = estimate.tasks.first
+
+        aggregate_failures do
+          expect(subject.min_hours(task)).to eq(2)
+          expect(subject.max_hours(task)).to eq(3.5)
+        end
+      end
     end
   end
 end
