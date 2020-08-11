@@ -31,6 +31,23 @@ RSpec.describe Estimate do
     expect(estimate.hours).to eq(Range.new(10, 20))
   end
 
+  describe "derived values" do
+    it "can be added to the full estimate" do
+      estimate = Estimate.new
+      estimate.build do |e|
+        e.task("Some work", 10, 20)
+        e.derived("Percentage", Derive.percent_of_total(25))
+        e.derived("Per task", Derive.per_task(1, 2))
+      end
+
+      expect(
+        estimate.hours(:with_derived => true)
+      ).to eq(
+        Range.new(10 + 3 + 1, 20 + 5 + 2)
+      )
+    end
+  end
+
   describe "full estimate" do
     subject {
       estimate = Estimate.new
