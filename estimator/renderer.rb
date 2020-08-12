@@ -82,10 +82,10 @@ class Renderer
   def output_task(task, level = 0)
     indented_name = indent(task.name, level)
 
-    row = if root?(level)
-      min_hours = task.min_hours(:with_derived => true)
-      max_hours = task.max_hours(:with_derived => true)
+    min_hours = task.min_hours(:with_derived => true)
+    max_hours = task.max_hours(:with_derived => true)
 
+    row = if root?(level)
       format_aggregate_row(
         :name => indented_name,
         :hours_low => min_hours.round(1),
@@ -98,8 +98,8 @@ class Renderer
     else
       format_row(
         indented_name,
-        task.min_hours.round(1),
-        task.max_hours.round(1)
+        min_hours.round(1),
+        max_hours.round(1)
       )
     end
     puts row
