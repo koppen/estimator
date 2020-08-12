@@ -16,13 +16,8 @@ class Renderer
     puts
 
     output_tasks
-    output_totals
-
-    if estimate.derived_values.any?
-      output_derived_values
-      output_totals(:with_derived => true)
-    end
-
+    output_derived_values
+    output_totals(:with_derived => true)
     output_price(:with_derived => true)
   end
 
