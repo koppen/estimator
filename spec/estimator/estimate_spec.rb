@@ -17,7 +17,7 @@ RSpec.describe Estimate do
       e.task("More work", 10, 20)
     end
 
-    expect(estimate.hours).to eq(Range.new(15, 26))
+    expect(estimate.hours(:with_derived => true)).to eq(Range.new(15, 26))
   end
 
   it "has sub-tasks" do
@@ -28,7 +28,7 @@ RSpec.describe Estimate do
       end
     end
 
-    expect(estimate.hours).to eq(Range.new(10, 20))
+    expect(estimate.hours(:with_derived => true)).to eq(Range.new(10, 20))
   end
 
   describe "derived values" do
@@ -84,7 +84,7 @@ RSpec.describe Estimate do
     end
 
     it "calculates hours with derived values" do
-      expect(subject.hours(:with_derived => true)).to eq(Range.new(19.5, 36))
+      expect(subject.hours(:with_derived => true)).to eq(Range.new(20.5, 38))
     end
   end
 end

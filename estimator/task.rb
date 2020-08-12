@@ -9,7 +9,7 @@ class Task
 
   include TaskList
 
-  def hours(with_derived: false)
+  def hours(with_derived:)
     Range.new(
       min_hours(:with_derived => with_derived),
       max_hours(:with_derived => with_derived)
@@ -22,18 +22,23 @@ class Task
     @max_hours = max_hours
   end
 
-  def max_hours(with_derived: false)
+  def max_hours(with_derived:)
+    tasks = filter_tasks(:with_derived => with_derived)
     if tasks.any?
-      tasks.map(&:max_hours).compact.inject(&:+)
+      tasks.map { |task|
+        task.max_hours(:with_derived => with_derived)
+      }.compact.inject(&:+)
     else
       @max_hours
     end
   end
 
-  def min_hours(with_derived: false)
-    tasks = filter_tasks(:with_derived => with_derived)
-    if tasks.any?
-      tasks.map(&:min_hours).compact.inject(&:+)
+  def min_hours(with_derived:)
+    tasks_to_sum = filter_tasks(:with_derived => with_derived)
+    if tasks_to_sum.any?
+      tasks_to_sum.map { |task|
+        task.min_hours(:with_derived => with_derived)
+      }.compact.inject(&:+)
     else
       @min_hours
     end

@@ -20,11 +20,11 @@ RSpec.describe Derive::PerTask do
     }
 
     it "adds 0 hours to min_hours" do
-      expect(subject.min_hours(estimate)).to eq(0)
+      expect(subject.min_hours(estimate, :with_derived => true)).to eq(0)
     end
 
     it "adds 0 hours to max_hours" do
-      expect(subject.max_hours(estimate)).to eq(0)
+      expect(subject.max_hours(estimate, :with_derived => true)).to eq(0)
     end
   end
 
@@ -34,11 +34,11 @@ RSpec.describe Derive::PerTask do
     }
 
     it "adds the minimum value for each task" do
-      expect(subject.min_hours(estimate)).to eq(2)
+      expect(subject.min_hours(estimate, :with_derived => true)).to eq(2)
     end
 
     it "adds the maximum value for each task" do
-      expect(subject.max_hours(estimate)).to eq(3.5)
+      expect(subject.max_hours(estimate, :with_derived => true)).to eq(3.5)
     end
 
     it "only counts tasks on the same nesting level" do
@@ -49,7 +49,7 @@ RSpec.describe Derive::PerTask do
         end
       end
 
-      expect(subject.min_hours(estimate)).to eq(1)
+      expect(subject.min_hours(estimate, :with_derived => true)).to eq(1)
     end
 
     context "added to a Task" do
@@ -68,8 +68,8 @@ RSpec.describe Derive::PerTask do
         task = estimate.tasks.first
 
         aggregate_failures do
-          expect(subject.min_hours(task)).to eq(2)
-          expect(subject.max_hours(task)).to eq(3.5)
+          expect(subject.min_hours(task, :with_derived => true)).to eq(2)
+          expect(subject.max_hours(task, :with_derived => true)).to eq(3.5)
         end
       end
     end

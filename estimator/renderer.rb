@@ -88,8 +88,8 @@ class Renderer
     indented_name = indent(task.name, level)
 
     row = if root?(level)
-      min_hours = task.min_hours
-      max_hours = task.max_hours
+      min_hours = task.min_hours(:with_derived => true)
+      max_hours = task.max_hours(:with_derived => true)
 
       format_aggregate_row(
         :name => indented_name,

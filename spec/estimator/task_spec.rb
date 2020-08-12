@@ -27,7 +27,7 @@ RSpec.describe Task do
       end
 
       it "returns the sum of min_hours from child tasks" do
-        expect(subject.min_hours).to eq(2 + 3)
+        expect(subject.min_hours(:with_derived => true)).to eq(2 + 3)
       end
     end
 
@@ -40,17 +40,17 @@ RSpec.describe Task do
       end
 
       it "returns the sum of only child tasks" do
-        expect(subject.min_hours(with_derived: false)).to eq(2)
+        expect(subject.min_hours(:with_derived => false)).to eq(2)
       end
 
       it "returns the sum of child tasks plus derived values" do
-        expect(subject.min_hours(with_derived: true)).to eq(2 + 2)
+        expect(subject.min_hours(:with_derived => true)).to eq(2 + 2)
       end
     end
 
     context "has no child tasks" do
       it "returns its own min_hours" do
-        expect(subject.min_hours).to eq(12)
+        expect(subject.min_hours(:with_derived => false)).to eq(12)
       end
     end
   end

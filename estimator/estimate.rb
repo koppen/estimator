@@ -17,7 +17,7 @@ class Estimate
     builder.instance_eval(&block)
   end
 
-  def days(with_derived: false)
+  def days(with_derived:)
     Range.new(
       min_hours(:with_derived => with_derived).to_f / hours_per_day,
       max_hours(:with_derived => with_derived).to_f / hours_per_day
@@ -33,14 +33,14 @@ class Estimate
     (days.to_f / days_per_iteration).ceil
   end
 
-  def hours(with_derived: false)
+  def hours(with_derived:)
     Range.new(
       min_hours(:with_derived => with_derived),
       max_hours(:with_derived => with_derived)
     )
   end
 
-  def iterations(with_derived: false)
+  def iterations(with_derived:)
     return nil unless days_per_iteration
 
     Range.new(
@@ -49,25 +49,25 @@ class Estimate
     )
   end
 
-  def price(with_derived: false)
+  def price(with_derived:)
     price_based_on_iterations(:with_derived => with_derived)
   end
 
-  def price_based_on_days(with_derived: false)
+  def price_based_on_days(with_derived:)
     Range.new(
       days(:with_derived => with_derived).first * price_per_day,
       days(:with_derived => with_derived).last * price_per_day
     )
   end
 
-  def price_based_on_iterations(with_derived: false)
+  def price_based_on_iterations(with_derived:)
     Range.new(
       iterations(:with_derived => with_derived).first * price_per_iteration,
       iterations(:with_derived => with_derived).last * price_per_iteration
     )
   end
 
-  def to_hash(with_derived: false)
+  def to_hash(with_derived:)
     {
       :hours_low => hours(:with_derived => with_derived).first,
       :hours_high => hours(:with_derived => with_derived).last,
@@ -80,7 +80,7 @@ class Estimate
 
   private
 
-  def filter_tasks(with_derived: false)
+  def filter_tasks(with_derived:)
     if with_derived
       tasks + derived_values
     else
@@ -88,13 +88,17 @@ class Estimate
     end
   end
 
-  def max_hours(with_derived: false)
+  def max_hours(with_derived:)
     items = filter_tasks(:with_derived => with_derived)
-    items.map(&:max_hours).compact.inject(&:+)
+    items.map { |item|
+      item.max_hours(:with_derived => with_derived)
+    }.compact.inject(&:+)
   end
 
-  def min_hours(with_derived: false)
+  def min_hours(with_derived:)
     items = filter_tasks(:with_derived => with_derived)
-    items.map(&:min_hours).compact.inject(&:+)
+    items.map { |item|
+      item.min_hours(:with_derived => with_derived)
+    }.compact.inject(&:+)
   end
 end
