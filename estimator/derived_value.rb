@@ -19,12 +19,12 @@ class DerivedValue
     @name = name
   end
 
-  def max_hours
-    calculation.max_hours(parent)
+  def max_hours(with_derived:)
+    calculation.max_hours(parent, :with_derived => with_derived)
   end
 
-  def min_hours
-    calculation.min_hours(parent)
+  def min_hours(with_derived:)
+    calculation.min_hours(parent, :with_derived => with_derived)
   end
 
   def tasks

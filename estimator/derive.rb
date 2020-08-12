@@ -7,12 +7,12 @@ class Derive
       @percentage = Float(percentage)
     end
 
-    def max_hours(parent)
-      (parent.hours.last * percentage / 100.0).ceil
+    def max_hours(parent, with_derived:)
+      (parent.hours(:with_derived => false).last * percentage / 100.0).ceil
     end
 
-    def min_hours(parent)
-      (parent.hours.first * percentage / 100.0).ceil
+    def min_hours(parent, with_derived:)
+      (parent.hours(:with_derived => false).first * percentage / 100.0).ceil
     end
 
     private
@@ -29,11 +29,11 @@ class Derive
       @max_hours_per_task = max_hours_per_task
     end
 
-    def max_hours(estimate)
+    def max_hours(estimate, with_derived:)
       max_hours_per_task * number_of_tasks(estimate)
     end
 
-    def min_hours(estimate)
+    def min_hours(estimate, with_derived:)
       min_hours_per_task * number_of_tasks(estimate)
     end
 

@@ -16,7 +16,7 @@ module TaskList
     @derived_values ||= []
   end
 
-  def filter_tasks(with_derived: false)
+  def filter_tasks(with_derived:)
     if with_derived
       tasks + derived_values
     else
