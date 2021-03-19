@@ -49,6 +49,8 @@ class Renderer
 
   def output_derived_values
     # Build a grouped task with all the derived values
+    return if estimate.derived_values.empty?
+
     group = Task.new("Management")
     estimate.derived_values.each do |derived_value|
       group.add_task(derived_value)
