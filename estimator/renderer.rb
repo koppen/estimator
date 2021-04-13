@@ -85,6 +85,7 @@ class Renderer
     indented_name = indent(task.name, level)
 
     min_hours = task.min_hours(:with_derived => true)
+    raise "No min_hours for #{task.inspect}" if min_hours.nil?
     max_hours = task.max_hours(:with_derived => true)
 
     row = if root?(level)
